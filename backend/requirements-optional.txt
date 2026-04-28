@@ -1,0 +1,2 @@
+# Optional advanced full-video hashing support.
+videohash>=3.0.1,<4

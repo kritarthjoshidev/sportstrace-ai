@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: sportstrace-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sportstrace
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - sportstrace_pgdata:/var/lib/postgresql/data
+
+volumes:
+  sportstrace_pgdata:
+
