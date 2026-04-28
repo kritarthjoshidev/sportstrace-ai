@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 * {
@@ -14,9 +14,36 @@ html,
 body {
   margin: 0;
   min-height: 100%;
-  background: #08111d;
-  color: #eef3fb;
-  font-family: "Aptos", "Segoe UI Variable", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(99, 102, 241, 0.12), transparent 24%),
+    radial-gradient(circle at top right, rgba(6, 182, 212, 0.08), transparent 22%),
+    radial-gradient(circle at bottom center, rgba(129, 140, 248, 0.08), transparent 28%),
+    #f8fafc;
+  color: #0f172a;
+  font-family: var(--font-sans), sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at top, black, transparent 72%);
+  opacity: 0.4;
+  z-index: -1;
 }
 
 a {
@@ -31,7 +58,98 @@ select {
   font: inherit;
 }
 
+button {
+  color: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
 ::selection {
-  background: rgba(57, 208, 200, 0.25);
+  background: rgba(99, 102, 241, 0.18);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.95);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.32);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.42);
+  background-clip: padding-box;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display), sans-serif;
+    letter-spacing: -0.03em;
+  }
+}
+
+@layer components {
+  .surface {
+    @apply rounded-[28px] border border-slate-200 bg-white shadow-md;
+  }
+
+  .surface-muted {
+    @apply rounded-[28px] border border-slate-200 bg-slate-50/80 shadow-md;
+  }
+
+  .surface-strong {
+    @apply rounded-[32px] border border-slate-200 bg-panel-sheen shadow-lg;
+  }
+
+  .field {
+    @apply h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-ink outline-none transition placeholder:text-muted focus:border-brand/40 focus:ring-4 focus:ring-brand/10;
+  }
+
+  .field-shell {
+    @apply rounded-[28px] border border-slate-200 bg-white/90 shadow-sm backdrop-blur-sm;
+  }
+
+  .eyebrow {
+    @apply text-[11px] uppercase tracking-[0.34em] text-brand/80;
+  }
+
+  .page-copy {
+    @apply max-w-2xl text-sm leading-7 text-muted;
+  }
+
+  .ghost-button {
+    @apply inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-ink transition hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md;
+  }
+
+  .primary-button {
+    @apply inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-brand to-cyan px-4 py-2.5 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg hover:brightness-105;
+  }
+
+  .secondary-button {
+    @apply inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-ink transition hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-md;
+  }
+
+  .subtle-card {
+    @apply rounded-2xl border border-slate-200 bg-slate-50/80;
+  }
+
+  .thumb-card {
+    @apply overflow-hidden rounded-[26px] border border-slate-200 bg-slate-50;
+  }
 }
 

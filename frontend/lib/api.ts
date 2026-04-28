@@ -8,7 +8,7 @@ import {
   VideoSummary,
   VerificationRecord
 } from "@/lib/types";
-import { mockAlerts, mockDashboard, mockDetection, mockVerification } from "@/lib/mock-data";
+import { mockAlerts, mockDashboard, mockDetection, mockVerification, mockVideos } from "@/lib/mock-data";
 
 const API_BASE = "/api/backend/api";
 const PROXY_BASE = "/api/backend";
@@ -135,7 +135,15 @@ export async function getVerification(id: string): Promise<VerificationRecord> {
 
 export async function getVideos(sourceType?: "original" | "suspect"): Promise<VideoSummary[]> {
   const suffix = sourceType ? `?source_type=${sourceType}` : "";
-  return fetchJson<VideoSummary[]>(`/videos${suffix}`);
+
+  try {
+    return await fetchJson<VideoSummary[]>(`/videos${suffix}`);
+  } catch {
+    if (shouldUseDemoMode()) {
+      return sourceType ? mockVideos.filter((video) => video.source_type === sourceType) : mockVideos;
+    }
+    throw new Error("Video library unavailable because the backend is offline.");
+  }
 }
 
 export async function uploadOriginal(payload: FormData): Promise<UploadOriginalResponse> {

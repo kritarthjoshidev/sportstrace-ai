@@ -1,6 +1,16 @@
 "use client";
 
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+
+import { formatDayLabel } from "@/lib/utils";
 
 export function TrendChart({
   data,
@@ -10,38 +20,25 @@ export function TrendChart({
   return (
     <div className="h-80 w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data}>
-          <defs>
-            <linearGradient id="pirated" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="5%" stopColor="#ff5d73" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#ff5d73" stopOpacity={0} />
-            </linearGradient>
-            <linearGradient id="suspicious" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="5%" stopColor="#ff9f5a" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#ff9f5a" stopOpacity={0} />
-            </linearGradient>
-            <linearGradient id="safe" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="5%" stopColor="#39d0c8" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#39d0c8" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-          <XAxis dataKey="day" stroke="#90a3c0" />
-          <YAxis stroke="#90a3c0" />
+        <LineChart data={data} margin={{ top: 12, left: -16, right: 8, bottom: 0 }}>
+          <CartesianGrid stroke="rgba(148,163,184,0.22)" vertical={false} />
+          <XAxis dataKey="day" stroke="#64748b" tickFormatter={formatDayLabel} tickLine={false} axisLine={false} />
+          <YAxis stroke="#64748b" tickLine={false} axisLine={false} />
           <Tooltip
+            labelFormatter={(value) => formatDayLabel(String(value))}
             contentStyle={{
-              background: "#101d30",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: "#ffffff",
+              border: "1px solid rgba(226,232,240,1)",
               borderRadius: 16,
-              color: "#eef3fb"
+              color: "#0f172a",
+              boxShadow: "0 12px 24px rgba(15, 23, 42, 0.1)",
             }}
           />
-          <Area type="monotone" dataKey="pirated" stroke="#ff5d73" fill="url(#pirated)" strokeWidth={2} />
-          <Area type="monotone" dataKey="suspicious" stroke="#ff9f5a" fill="url(#suspicious)" strokeWidth={2} />
-          <Area type="monotone" dataKey="safe" stroke="#39d0c8" fill="url(#safe)" strokeWidth={2} />
-        </AreaChart>
+          <Line type="monotone" dataKey="pirated" stroke="#ef4444" strokeWidth={3} dot={false} activeDot={{ r: 5 }} />
+          <Line type="monotone" dataKey="suspicious" stroke="#6366f1" strokeWidth={3} dot={false} activeDot={{ r: 5 }} />
+          <Line type="monotone" dataKey="safe" stroke="#22c55e" strokeWidth={3} dot={false} activeDot={{ r: 5 }} />
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );
 }
-
